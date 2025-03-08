@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Предварительный просмотр печати - Kozloff Print Kiosk</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS (CDN) -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="text-center mt-4">
+        <h1>Предварительный просмотр печати</h1>
+    </div>
+    <div class="mt-4">
+        <p th:text="${message}"></p>
+        <p>Количество копий: <span th:text="${copies}"></span></p>
+        <p>Режим печати: <span th:text="${printMode}"></span></p>
+        <p>Имя файла: <span th:text="${fileName}"></span></p>
+        <!-- Здесь можно добавить изображение предварительного просмотра -->
+        <div class="mt-4">
+            <a href="/" class="btn btn-secondary">Вернуться назад</a>
+            <a href="/print" class="btn btn-primary">Печать</a> <!-- Если нужна логика печати -->
+        </div>
+    </div>
+</div>
+<!-- Bootstrap JS и зависимости -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
