@@ -20,7 +20,7 @@ FROM openjdk:17-jdk-alpine
 WORKDIR /app
 
 # Копируем собранный .jar файл из стадии сборки
-COPY --from=build /app/build/libs/copy-0.0.1-plain.jar app.jar
+COPY --from=build /build/libs/copy-0.0.1-plain.jar app.jar
 
 # Открываем порт, на котором работает Spring Boot
 EXPOSE 8080
