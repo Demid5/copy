@@ -1,29 +1,26 @@
-# Используем базовый образ с Gradle и Java
-FROM gradle:8.0.2-jdk17-alpine AS build
+# Используем официальный образ OpenJDK 17 с JDK
+FROM eclipse-temurin:17-jdk as build
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Копируем исходный код в контейнер
+# Копируем файлы проекта в контейнер
 COPY . .
 
-# Увеличиваем объем памяти для Gradle
-ENV GRADLE_OPTS="-Xmx2048m -XX:MaxMetaspaceSize=512m"
+# Запускаем сборку приложения
+RUN ./gradlew clean build -x test
 
-# Очищаем и собираем проект с помощью Gradle Wrapper
-RUN ./gradlew clean build --no-daemon --stacktrace
-
-# Используем базовый образ с Java для финального контейнера
-FROM openjdk:17-jdk-alpine
+# Используем более лёгкий образ JDK 17 для запуска
+FROM eclipse-temurin:17-jre
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Копируем собранный .jar файл из стадии сборки
-COPY --from=build /build/libs/copy-0.0.1-plain.jar app.jar
+# Копируем собранный jar-файл из предыдущего этапа
+COPY --from=build /app/build/libs/*.jar app.jar
 
-# Открываем порт, на котором работает Spring Boot
+# Открываем порт (если нужно)
 EXPOSE 8080
 
-# Команда для запуска приложения
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Запуск приложения
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
