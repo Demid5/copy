@@ -6,8 +6,6 @@ WORKDIR /app
 
 # Копируем файлы проекта в контейнер
 COPY . .
-COPY src/main/resources/static /app/static
-
 # Запускаем сборку приложения
 RUN ./gradlew clean build -x test
 
